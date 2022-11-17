@@ -1,4 +1,3 @@
-from typing import Tuple
 
 import numpy as np
 import pandas as pd
@@ -60,31 +59,6 @@ def remove_outliers_using_interquartile(
     return data_frame[data_frame["Outlier"] == 0]
 
 
-def remove_outliers_using_eliptic_envelope(
-    data_frame: pd.DataFrame, column_name: str
-) -> pd.DataFrame:
-    """
-    This function will remove outliers based on the column name from the provided dataframe which is used for detecting
-    outliers in a Gaussian distributed dataset.
-
-    Args:
-        data_frame: The dataframe which holds the column to be analysed for outliers.
-        column_name: Column to be analysed for outliers.
-    Returns: the dataframe excluding outliers based on the provided column.
-    """
-    data_frame = data_frame.copy()
-    data_frame["Outlier"] = (
-        EllipticEnvelope()
-        .fit(data_frame[[column_name]])
-        .predict(data_frame[[column_name]])
-    )
-
-    print(
-        f'Identified {len(data_frame[data_frame["Outlier"] == -1])} outliers for column {column_name}.'
-    )
-    return data_frame[data_frame["Outlier"] == 1]
-
-
 def remove_outliers_using_local_factor(
     data_frame: pd.DataFrame, column_name: str
 ) -> pd.DataFrame:
@@ -112,7 +86,7 @@ def remove_outliers_using_local_factor(
 def remove_all_outliers(
     data_frame: pd.DataFrame,
     columns_for_outlier_detection: list,
-    method: str = ["interquartile", "local_factor", "elpitic_envelope"],
+    method: str = ["interquartile", "local_factor"],
 ) -> pd.DataFrame:
     """
     This function will remove outliers based on the column name from the provided dataframe using a 'traditional'
@@ -127,7 +101,7 @@ def remove_all_outliers(
     start_rows = data_frame.shape[0]
     data_frame = data_frame.copy()
 
-    if method not in ["interquartile", "local_factor", "elpitic_envelope"]:
+    if method not in ["interquartile", "local_factor"]:
         raise Exception("Method for outlier detection is not selected from given list.")
 
     if len(columns_for_outlier_detection) == 0:
@@ -149,9 +123,6 @@ def remove_all_outliers(
     elif method == "local_factor":
         for col in columns_for_outlier_detection:
             data_frame = remove_outliers_using_local_factor(data_frame, col)
-    elif method == "elpitic_envelope":
-        for col in columns_for_outlier_detection:
-            data_frame = remove_outliers_using_eliptic_envelope(data_frame, col)
 
     end_rows = data_frame.shape[0]
 
