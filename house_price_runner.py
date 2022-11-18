@@ -8,5 +8,5 @@ columns_for_outlier_detection = list(["price", "lotsize_sq_ft"])
 data = remove_all_outliers(
     data_frame=data,
     columns_for_outlier_detection=columns_for_outlier_detection,
-    method="elpitic_envelope",
+    method="interquartile",
 )

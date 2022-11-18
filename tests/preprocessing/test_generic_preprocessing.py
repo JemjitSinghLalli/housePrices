@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import pytest
 
 from utils.preprocessing.generic_preprocessing import (
     clean_data,
@@ -45,18 +44,22 @@ def test_clean_data():
 
 
 def test_remove_outliers_using_interquartile():
-    test_df = pd.DataFrame([['Ajitesh', 84, 183, 'no'],
-                            ['Shailesh', 79, 186, 'yes'],
-                            ['Seema', 67, 158, 'yes'],
-                            ['Nidhi', 52, 155, 'no'],
-                            ['Ajay', 132, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Aaron', 145, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Luke', 67, 158, 'yes'],
-                            ['Rob', 7, 158, 'yes'],
-                            ['Dan', 67, 158, 'yes']])
-    test_df.columns = ['name', 'weight', 'height', 'smoke_or_not']
+    test_df = pd.DataFrame(
+        [
+            ["Ajitesh", 84, 183, "no"],
+            ["Shailesh", 79, 186, "yes"],
+            ["Seema", 67, 158, "yes"],
+            ["Nidhi", 52, 155, "no"],
+            ["Ajay", 132, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Aaron", 145, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Luke", 67, 158, "yes"],
+            ["Rob", 7, 158, "yes"],
+            ["Dan", 67, 158, "yes"],
+        ]
+    )
+    test_df.columns = ["name", "weight", "height", "smoke_or_not"]
     test_df_removed_outliers = remove_outliers_using_interquartile(test_df, "height")
 
     assert isinstance(
@@ -66,24 +69,28 @@ def test_remove_outliers_using_interquartile():
         "Outlier column was not appended to the dataframe, please check to see if outlier detection has worked "
         "successfully."
     )
-    assert test_df_removed_outliers["Outlier"].unique()  == 0, (
-        "Dataframe has not removed outliers, some outliers still remain."
-    )
+    assert (
+        test_df_removed_outliers["Outlier"].unique() == 0
+    ), "Dataframe has not removed outliers, some outliers still remain."
 
 
 def test_remove_outliers_using_local_factor():
-    test_df = pd.DataFrame([['Ajitesh', 84, 183, 'no'],
-                            ['Shailesh', 79, 186, 'yes'],
-                            ['Seema', 67, 158, 'yes'],
-                            ['Nidhi', 52, 155, 'no'],
-                            ['Ajay', 132, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Aaron', 145, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Luke', 67, 158, 'yes'],
-                            ['Rob', 7, 158, 'yes'],
-                            ['Dan', 67, 158, 'yes']])
-    test_df.columns = ['name', 'weight', 'height', 'smoke_or_not']
+    test_df = pd.DataFrame(
+        [
+            ["Ajitesh", 84, 183, "no"],
+            ["Shailesh", 79, 186, "yes"],
+            ["Seema", 67, 158, "yes"],
+            ["Nidhi", 52, 155, "no"],
+            ["Ajay", 132, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Aaron", 145, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Luke", 67, 158, "yes"],
+            ["Rob", 7, 158, "yes"],
+            ["Dan", 67, 158, "yes"],
+        ]
+    )
+    test_df.columns = ["name", "weight", "height", "smoke_or_not"]
     test_df_removed_outliers = remove_outliers_using_local_factor(test_df, "height")
 
     assert isinstance(
@@ -93,28 +100,34 @@ def test_remove_outliers_using_local_factor():
         "Outlier column was not appended to the dataframe, please check to see if outlier detection has worked "
         "successfully."
     )
-    assert test_df_removed_outliers["Outlier"].unique() == 1, (
-        "Dataframe has not removed outliers, some outliers still remain."
-    )
+    assert (
+        test_df_removed_outliers["Outlier"].unique() == 1
+    ), "Dataframe has not removed outliers, some outliers still remain."
 
 
 def test_remove_all_outliers():
-    test_df = pd.DataFrame([['Ajitesh', 84, 183, 'no'],
-                            ['Shailesh', 79, 186, 'yes'],
-                            ['Seema', 67, 158, 'yes'],
-                            ['Nidhi', 52, 155, 'no'],
-                            ['Ajay', 132, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Aaron', 145, 158, 'yes'],
-                            ['Jimmy', 67, 158, 'yes'],
-                            ['Luke', 67, 158, 'yes'],
-                            ['Rob', 7, 158, 'yes'],
-                            ['Dan', 67, 158, 'yes']])
-    test_df.columns = ['name', 'weight', 'height', 'smoke_or_not']
-    test_columns_for_outlier_detection = ['weight', 'height']
+    test_df = pd.DataFrame(
+        [
+            ["Ajitesh", 84, 183, "no"],
+            ["Shailesh", 79, 186, "yes"],
+            ["Seema", 67, 158, "yes"],
+            ["Nidhi", 52, 155, "no"],
+            ["Ajay", 132, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Aaron", 145, 158, "yes"],
+            ["Jimmy", 67, 158, "yes"],
+            ["Luke", 67, 158, "yes"],
+            ["Rob", 7, 158, "yes"],
+            ["Dan", 67, 158, "yes"],
+        ]
+    )
+    test_df.columns = ["name", "weight", "height", "smoke_or_not"]
+    test_columns_for_outlier_detection = ["weight", "height"]
     method = "interquartile"
 
-    test_df_removed_all_outliers = remove_all_outliers(test_df, test_columns_for_outlier_detection, method)
+    test_df_removed_all_outliers = remove_all_outliers(
+        test_df, test_columns_for_outlier_detection, method
+    )
 
     assert isinstance(
         test_df_removed_all_outliers, pd.DataFrame
@@ -123,6 +136,7 @@ def test_remove_all_outliers():
         "Outlier column was not appended to the dataframe, please check to see if outlier detection has worked "
         "successfully."
     )
-    assert test_df_removed_all_outliers["Outlier"].unique() == 1 or test_df_removed_all_outliers["Outlier"].unique() == 0, (
-        "Dataframe has not removed outliers, some outliers still remain."
-    )
+    assert (
+        test_df_removed_all_outliers["Outlier"].unique() == 1
+        or test_df_removed_all_outliers["Outlier"].unique() == 0
+    ), "Dataframe has not removed outliers, some outliers still remain."
