@@ -1,3 +1,6 @@
+
+from sklearn.model_selection import train_test_split
+
 from utils.features.feature_engineering import engineer_features
 from utils.load.data_importing import import_csv_data
 from utils.preprocessing.generic_preprocessing import clean_data, remove_all_outliers
@@ -12,3 +15,5 @@ data = remove_all_outliers(
     method="interquartile",
 )
 data = engineer_features(data_frame=data)
+train_set, test_set = train_test_split(data, test_size=0.2, random_state=42)
+train_set.head()
