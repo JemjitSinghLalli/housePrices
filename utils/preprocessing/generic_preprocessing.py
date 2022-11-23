@@ -129,4 +129,19 @@ def remove_all_outliers(
     )
     print(f"{start_rows - (start_rows-end_rows)} rows remain.")
 
+    return data_frame.drop(columns="Outlier")
+
+
+def convert_object_to_categorical(data_frame: pd.DataFrame) -> pd.DataFrame:
+    """
+    This function will identify features which are object that should be categorical. In order for
+    select_features_using_lgb_importance() to work, they need to be categorical.
+
+    Args:
+        data_frame: The dataframe which holds all features.
+    Returns: the dataframe returned holds categorical features as opposed to object features.
+    """
+    object_features = data_frame.select_dtypes(["object"]).columns
+    data_frame[object_features] = data_frame[object_features].astype("category")
+
     return data_frame
