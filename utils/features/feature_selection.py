@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Any
 
 import pandas as pd
 
@@ -7,8 +7,8 @@ def select_features_using_lgb_importance(
     train_df: pd.DataFrame,
     features: pd.Series,
     target: str,
-    model: Callable,
-    min_importance: int,
+    model: Any,
+    min_importance: float,
 ) -> pd.Series:
     """
     This function will select features from the series of possible features based on their defined by

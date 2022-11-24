@@ -129,7 +129,7 @@ def remove_all_outliers(
     )
     print(f"{start_rows - (start_rows-end_rows)} rows remain.")
 
-    return data_frame.drop(columns="Outlier")
+    return data_frame
 
 
 def convert_object_to_categorical(data_frame: pd.DataFrame) -> pd.DataFrame:
