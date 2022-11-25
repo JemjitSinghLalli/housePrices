@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def engineer_features(data_frame: pd.DataFrame) -> pd.DataFrame:
+def engineer_features(data_frame: pd.DataFrame, target: str) -> pd.DataFrame:
     """
     Dataframe holding house prices which engineers features.
     Args:
@@ -15,4 +15,4 @@ def engineer_features(data_frame: pd.DataFrame) -> pd.DataFrame:
 
     print("Feature engineering is complete.")
 
-    return data_frame
+    return data_frame, pd.Series(data_frame.drop(columns=target).columns)
