@@ -1,4 +1,3 @@
-
 import lightgbm as lgb
 import pandas as pd
 import pickle
@@ -9,7 +8,11 @@ from utils.evaluation.model_evaluation import evaluate_regression_model
 from utils.features.feature_engineering import engineer_features
 from utils.features.feature_selection import select_features_using_lgb_importance
 from utils.load.data_importing import import_csv_data
-from utils.preprocessing.generic_preprocessing import clean_data, remove_all_outliers, convert_object_to_categorical
+from utils.preprocessing.generic_preprocessing import (
+    clean_data,
+    remove_all_outliers,
+    convert_object_to_categorical,
+)
 
 
 fixed_params = {
@@ -51,7 +54,7 @@ def runner(data_frame: pd.DataFrame, target: str):
     model = lgb.LGBMRegressor(**fixed_params)
     model.fit(train_set[features], train_set[target])
     filename = f'model/model_{datetime.today().strftime("%Y-%m-%d")}.pkl'
-    pickle.dump(model, open(filename, 'wb'))
+    pickle.dump(model, open(filename, "wb"))
 
     return evaluate_regression_model(
         train_df=train_set,

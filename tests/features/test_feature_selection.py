@@ -10,9 +10,9 @@ def test_select_features_using_lgb_importance():
     test_data_set = get_test_dataframe()
     train_set, _ = train_test_split(test_data_set)
     target = "target"
-    features = pd.Series(test_data_set.columns[test_data_set.columns != "target"]).sample(
-        frac=1.0
-    )
+    features = pd.Series(
+        test_data_set.columns[test_data_set.columns != "target"]
+    ).sample(frac=1.0)
     selected_hyperparams = {"n_estimators": 20}
 
     selected_features_lgb_test = select_features_using_lgb_importance(
@@ -33,4 +33,3 @@ def test_select_features_using_lgb_importance():
             for bad_feature in ["bad_feature1", "bad_feature2", "bad_feature3"]
         ]
     ), "selected_features_test_series is returning bad features"
-
